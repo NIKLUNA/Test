@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eschborner Sportclub – Kunst & Kampfsport | Tibetisches Kung Fu</title>
+    
+    
+    <!--<audio id="bg-sound" src="sound.mp3" loop style="display:none;"></audio>-->
+    
+    
+    <style>
+        :root {
+            --color-brand-black: #0a0a0a;
+            --color-brand-blue: #001233;
+            --color-brand-blue-dark: #fff9ed;
+            --color-brand-red: #A1000E;         /* Tibetisches Rot */
+            --color-brand-gold: #c3a679;        /* Edles Gold */
+            --color-brand-gold-bright: #e8d3b0;
+            --color-bg-cream: #fff9ed;          /* Warmer edler Hintergrund */
+            --color-brand-muted: #555555;
+            
+            --border-color: rgba(0, 18, 51, 0.1);
+            --border-gold: rgba(195, 166, 121, 0.4);
+
+            --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, "Times New Roman", serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--color-bg-cream);
+            color: var(--color-brand-black);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            line-height: 1.6;
+            width: 100%;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background-color: var(--color-brand-red);
+            color: #fff9ed;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg-cream);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-brand-gold);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-brand-red);
+        }
+
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-row { flex-direction: row; }
+        .grid { display: grid; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .w-full { width: 100%; }
+        .max-w-7xl { max-width: 80rem; margin-left: auto; margin-right: auto; }
+        .max-w-5xl { max-width: 64rem; margin-left: auto; margin-right: auto; }
+
+        /* Navigation Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.2rem 4vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 249, 237, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            text-decoration: none;
+            color: var(--color-brand-black);
+            font-weight: 800;
+        }
+
+        .logo-text {
+            color: var(--color-brand-red);
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+        }
+
+        nav.desktop-nav {
+            display: flex;
+            gap: 2.2rem;
+            align-items: center;
+        }
+
+        nav.desktop-nav a {
+            color: var(--color-brand-black);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0.2rem 0;
+        }
+
+        nav.desktop-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--color-brand-red);
+            transition: width 0.3s ease;
+        }
+
+        nav.desktop-nav a:hover::after {
+            width: 100%;
+        }
+
+        nav.desktop-nav a:hover {
+            color: var(--color-brand-red);
+        }
+
+        .btn-header-cta {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            color: var(--color-brand-black);
+            padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-header-cta:hover {
+            background-color: var(--color-brand-gold);
+            color: #ffffff;
+            border-color: var(--color-brand-gold);
+            box-shadow: 0 4px 15px rgba(195, 166, 121, 0.4);
+        }
+
+        /* Mobile Hamburger & Overlay */
+        .hamburger-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            z-index: 999;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem 2rem;
+        }
+
+        .mobile-menu-overlay.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-link {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            color: var(--color-brand-black);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--color-brand-red);
+        }
+
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    padding: 9rem 6vw 5rem 6vw;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    overflow: hidden;
+    background-color: #fff9ed;
+}
+
+/* Halbtransparentes PNG im Hintergrund */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('forest.png'); /* PNG-Pfad anpassen */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2; /* Transparenz (0.1 bis 0.5 empfohlen für Lesbarkeit) */
+    pointer-events: none;
+}
+
+        /* Hero Section (aus !vorlage) 
+         .hero-section {
+            position: relative;
+            min-height: 100vh;
+            padding: 9rem 6vw 5rem 6vw;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            overflow: hidden;
+            background-color: #fff9ed;
+        }*/
+
+        .kinetic-title {
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            font-family: var(--font-serif);
+            font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+            font-weight: 700;
+            color: var(--color-brand-red);
+            text-transform: uppercase;
+        }
+
+        .kinetic-title span {
+            color: var(--color-brand-gold);
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            background-color: var(--color-brand-gold);
+            color: var(--color-brand-black);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(195, 166, 121, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-brand-red);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(161, 0, 14, 0.4);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            color: var(--color-brand-black);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(0,0,0,0.05);
+            border-color: var(--color-brand-black);
+        }
+
+        /* Disziplinen Sektion (aus !aktuell) */
+        .grid-section {
+            width: 100%;
+            padding: 6rem 4vw;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .grid-title {
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            color: var(--color-brand-red);
+            font-family: var(--font-serif);
+            position: relative;
+            padding-left: 1.5rem;
+            font-weight: 700;
+        }
+
+        .grid-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 15%;
+            height: 70%;
+            width: 5px;
+            background: var(--color-brand-red);
+            border-radius: 4px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .card {
+            background: #fff9ed;
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 18, 51, 0.03);
+            opacity: 0;
+            transform: translateY(35px);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 18, 51, 0.08);
+            border-color: rgba(161, 0, 14, 0.25);
+        }
+
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(161, 0, 14, 0.08);
+            border-radius: 16px;
+            display: grid;
+            place-content: center;
+            color: var(--color-brand-red);
+            font-weight: 800;
+            font-size: 1.15rem;
+            border: 1px solid rgba(161, 0, 14, 0.15);
+        }
+
+        .card h3 {
+            font-size: 1.45rem;
+            color: var(--color-brand-blue);
+            font-weight: 700;
+            font-family: var(--font-serif);
+        }
+
+        .card p {
+            color: var(--color-brand-muted);
+            font-size: 1rem;
+            line-height: 1.65;
+        }
+
+        /* Bento Galerie Sektion (aus !aktuell) */
+        .bento-section-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1600px;
+            margin: 2rem auto 6rem auto;
+            padding: 0 3vw;
+        }
+
+        .bento-scroll-container {
+            position: relative;
+            width: 100%;
+            height: 240vh;
+            margin: 2rem 0 4rem 0;
+        }
+
+        .bento-sticky-wrap {
+            position: sticky;
+            top: 6vh;
+            height: 88vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 32px;
+            padding: 1.8rem;
+            background: var(--color-brand-blue-dark);
+            border: 1px solid var(--color-brand-gold-bright);
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 10, 26, 0.3);
+        }
+
+        .bento-sticky-wrap::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(245, 219, 181, 0.12) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .gallery-grid {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            gap: 1.2vw;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            z-index: 2;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            background-color: var(--color-brand-blue-dark);
+            width: 100%;
+            height: 100%;
+            border: 0px solid rgba(255, 255, 255, 0.12);
+            transition: transform 0.1s ease-out, opacity 0.1s ease-out, filter 0.1s ease-out;
+            will-change: transform, opacity, filter;
+        }
+
+        .gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item:nth-child(1) { grid-area: 1 / 1 / 3 / 2; }
+        .gallery-item:nth-child(2) { grid-area: 1 / 2 / 2 / 3; }
+        .gallery-item:nth-child(3) { grid-area: 2 / 2 / 4 / 3; }
+        .gallery-item:nth-child(4) { grid-area: 1 / 3 / 3 / 4; }
+        .gallery-item:nth-child(5) { grid-area: 3 / 1 / 4 / 2; }
+        .gallery-item:nth-child(6) { grid-area: 3 / 3 / 5 / 4; }
+        .gallery-item:nth-child(7) { grid-area: 4 / 1 / 5 / 2; }
+        .gallery-item:nth-child(8) { grid-area: 4 / 2 / 5 / 3; }
+
+        .target-featured {
+            z-index: 10;
+            border: 2px solid var(--color-brand-gold);
+            box-shadow: 0 0 30px rgba(195, 166, 121, 0.4);
+        }
+
+        .video-hud-overlay {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            right: 2rem;
+            z-index: 12;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+        }
+
+        .video-hud-overlay.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .hud-card {
+            background: rgba(0, 18, 51, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(195, 166, 121, 0.4);
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            max-width: 580px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .hud-badge {
+            display: inline-block;
+            color: var(--color-brand-gold-bright);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .hud-title {
+            color: #ffffff;
+            font-family: var(--font-serif);
+            font-size: clamp(1.4rem, 2.5vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .hud-desc {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Schedule / Zeiten Sektion (aus !vorlage) */
+        .schedule-section {
+            padding: 6rem 4vw;
+            background-color: #fff9ed;
+            position: relative;
+        }
+
+        .schedule-tab {
+            background: transparent;
+            border: none;
+            padding: 1rem 1.8rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            color: var(--color-brand-black);
+            transition: all 0.25s ease;
+        }
+
+        .schedule-tab.active {
+            color: var(--color-brand-red);
+            border-bottom: 2px solid var(--color-brand-red);
+            background: rgba(161, 0, 14, 0.04);
+        }
+
+        .schedule-row {
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: background 0.2s ease;
+        }
+
+        .schedule-row:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .tag-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(161, 0, 14, 0.1);
+            color: var(--color-brand-red);
+            border: 1px solid rgba(161, 0, 14, 0.25);
+        }
+
+        /* Probetraining & Kontakt Section (aus !vorlage) */
+        .contact-section {
+            padding: 6rem 4vw;
+            background: #fff9ed;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 12px;
+            padding: 0.9rem 1.2rem;
+            color: var(--color-brand-black);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-brand-red);
+            background: #ffffff;
+        }
+
+        /* Footer & Impressum Modal */
+        footer {
+            background: var(--color-brand-black);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 3.5rem 4vw 2.5rem 4vw;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--color-brand-gold-bright);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            color: var(--color-brand-black);
+            border-radius: 24px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        /* Custom Notification Toast */
+        .toast-box {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--color-brand-blue);
+            color: #ffffff;
+            padding: 1.2rem 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--color-brand-gold);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            z-index: 3000;
+            display: none;
+            max-width: 400px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 850px) {
+            nav.desktop-nav, .btn-header-cta { display: none; }
+            .hamburger-btn { display: block; }
+
+            .hero-section {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-top: 8rem;
+                gap: 3rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(4, 1fr);
+            }
+            .gallery-item:nth-child(1) { grid-area: 1 / 1 / 2 / 2; }
+            .gallery-item:nth-child(2) { grid-area: 1 / 2 / 2 / 3; }
+            .gallery-item:nth-child(3) { grid-area: 2 / 1 / 3 / 3; }
+            .gallery-item:nth-child(4) { grid-area: 3 / 1 / 4 / 2; }
+            .gallery-item:nth-child(5) { grid-area: 3 / 2 / 4 / 3; }
+            .gallery-item:nth-child(6) { grid-area: 4 / 1 / 5 / 2; }
+            .gallery-item:nth-child(7) { grid-area: 4 / 2 / 5 / 3; }
+            .gallery-item:nth-child(8) { display: none; }
+
+            .schedule-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BANNER & NAVIGATION (aus !vorlage) -->
+    <header>
+        <a href="#" class="logo">
+            <svg viewBox="0 0 500 500" width="54" height="54" style="flex-shrink: 0;">
+                <circle cx="250" cy="250" r="230" fill="none" stroke="#A1000E" stroke-width="8" />
+                <circle cx="250" cy="250" r="190" fill="none" stroke="#A1000E" stroke-width="8" />
+                <g transform="translate(250, 245) scale(1.1)">
+                    <path d="M 120,-40 C 100,-100 20,-110 -70,-50 C -140,0 -120,40 -100,50 C -50,65 100,100 120,10 C 130,-10 130,-20 120,-40 Z" fill="none" stroke="#A1000E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M 173,-50 C 120,-40 40,-10 -100,50" fill="none" stroke="#A1000E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M 50,-15 C 40,-55 10,-65 -10,-60" fill="none" stroke="#A1000E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M 0,0 C -10,-35 -30,-45 -50,-35" fill="none" stroke="#A1000E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M 65,-10 C 60,25 40,45 10,40" fill="none" stroke="#A1000E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M 20,5 C 10,35 -15,50 -35,35" fill="none" stroke="#A1000E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+                </g>
+            </svg>
+            <span class="logo-text">Eschborner Sportclub</span>
+        </a>
+
+        <nav class="desktop-nav">
+            <a href="#angebot">Disziplinen</a>
+            <a href="#impressionen">Impressionen</a>
+            <a href="#schedule">Zeiten</a>
+            <!--<a href="#probetraining">Probetraining</a>-->
+            <a href="#kontakt">Kontakt</a>
+        </nav>
+
+        <a href="#probetraining" class="btn-header-cta">Probetraining</a>
+
+        <button class="hamburger-btn" id="mobile-menu-btn" aria-label="Menü öffnen">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#001233" stroke-width="2.5"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+    </header>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobile-menu" class="mobile-menu-overlay">
+        <button id="mobile-menu-close" style="position: absolute; top: 2rem; right: 2rem; background: none; border: none; cursor: pointer;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#001233" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div style="display: flex; flex-direction: column;">
+            <a href="#angebot" class="mobile-nav-link">01. Disziplinen</a>
+            <a href="#impressionen" class="mobile-nav-link">02. Impressionen</a>
+            <a href="#schedule" class="mobile-nav-link">03. Trainingszeiten</a>
+            <a href="#probetraining" class="mobile-nav-link">04. Probetraining</a>
+            <a href="#kontakt" class="mobile-nav-link">05. Kontakt & Anfahrt</a>
+        </div>
+        <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(0,0,0,0.1); font-size: 0.85rem; color: #666;">
+            <p style="font-weight: 700; color: #000;">Eschborner Sportclub</p>
+            <p>Götzenstraße 57, 65760 Eschborn</p>
+            <p>Tel: +49 (0) 163 86 89 569</p>
+        </div>
+    </div>
+
+    <!-- HERO BANNER SECTION -->
+   <section class="hero-section">
+    <!-- Hier z-index und position ergänzt -->
+    <div style="max-width: 820px; position: relative; z-index: 1;">
+        <h1 class="kinetic-title">
+            
+            <h1 class="kinetic-title">
+                Tibetisches<br>
+                Kung Fu<br>
+                <span>im Eschborner Sportclub</span>
+            </h1>
+
+            <p style="font-size: 1.15rem; color: var(--color-brand-muted); margin: 1.8rem 0 2.5rem 0; font-weight: 400; max-width: 680px; line-height: 1.65;">
+                Ein System ohne starre Regeln. Pure Körperbeherrschung, instinktive Reaktion und explosive Kraftentfaltung. Gelehrt im Eschborner Sportclub für Schüler aller Altersklassen.
+            </p>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="#probetraining" class="btn-primary">
+                    <span>Kostenloses Probetraining</span>
+                </a>
+                <a href="#angebot" class="btn-secondary">
+                    <span>Angebot Entdecken</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+                </a>
+            </div>
+        </div>
+<!--
+        <div style="max-width: 300px; padding-left: 1.5rem; border-left: 2px solid rgba(195, 166, 121, 0.4); display: flex; flex-direction: column; gap: 1.2rem; font-size: 0.88rem; color: var(--color-brand-muted);">
+            <div>
+                <h4 style="color: var(--color-brand-black); text-transform: uppercase; font-weight: 800; letter-spacing: 0.08em; font-size: 0.82rem; margin-bottom: 0.2rem;">AUTHENTISCH</h4>
+                <p>Traditionelle tibetische Kampfkünste, weitergegeben im Herzen von Eschborn.</p>
+            </div>
+            <div>
+                <h4 style="color: var(--color-brand-black); text-transform: uppercase; font-weight: 800; letter-spacing: 0.08em; font-size: 0.82rem; margin-bottom: 0.2rem;">EFFEKTIV</h4>
+                <p>Fokus auf individueller Reaktivität, Flexibilität und biomechanischer Effizienz.</p>
+            </div>
+            <div>
+                <h4 style="color: var(--color-brand-black); text-transform: uppercase; font-weight: 800; letter-spacing: 0.08em; font-size: 0.82rem; margin-bottom: 0.2rem;">GANZHEITLICH</h4>
+                <p>Schulung von Geist, Phantasie, Ausdauer und koordinativer Balance.</p>
+            </div>
+        </div>-->
+    </section>
+
+    <main>
+
+        <!-- DISZIPLINEN / ANGEBOT SEKTION (aus !aktuell) -->
+        <section id="angebot" class="grid-section">
+            <div class="section-header">
+                <h2 class="grid-title">Unsere Disziplinen</h2>
+            </div>
+            
+              <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">01</div>
+          <h3>Tibetisches Kung Fu</h3>
+  Eine seltene und ausdrucksstarke Kampfkunst. Fließende, unberechenbare Akrobatik trifft auf Ganzkörperdynamik und traditionelle Waffenformen.<br><br>Eine alte Kampfkunst, von Großmeister Vardan Khachatrian in den 90ern nach Deutschland gebracht.<br>
+
+<p>Das Training</p>
+<p>Aufwärmen:</p>Meditation für Fokus, danach intensive Fitness, Kampfakrobatik und Box-Elemente.<br>
+
+<p>Technik:</p> Partnerübungen und Taos (Formen) - von tierischen Stilen (Schlange, Katze, Affe) bis hin zu unkonventionellen Techniken.<br>
+
+<p>Waffen:</p>Schulung von Präzision, Reflexen und Selbstverteidigung mit (und gegen) Gegenstände.<br>
+
+<p>Deine Vorteile</p>
+<p>Gesundheit:</p> Stärkt Herz, Muskeln und Gelenke.<br>
+
+<p>Geist: </p>Fördert Gelassenheit, Selbstbeherrschung und innere Ruhe.<br>
+
+<p>Für wen? Für jeden!</p>Alter, Vorkenntnisse oder Statur sind egal - Anfänger und Fortgeschrittene trainieren gemeinsam.
+Komm vorbei und finde deinen eigenen Weg!
+          </p>
+                  </div>
+
+
+<div class="card">
+          <div class="card-icon">02</div>
+          <h3>Tibetisches Kung Fu für Kinder</h3>
+          
+<p>Stärkung von Anfang an</p>
+Ein ganzheitliches Kindertraining, das Selbstbewusstsein, Fitness und soziales Miteinander spielerisch fördert.<br>
+
+<p>Das erwartet die Kinder</p>
+Fitness & Akrobatik: Aufwärmen für Schnelligkeit, Beweglichkeit, Feinmotorik und Fallschule - kombiniert mit Disziplin und Fokus.<br>
+
+<p>Spielerisch Lernen: </p>Selbstverteidigung ohne Druck. Kreativität ist ausdrücklich erwünscht, damit jedes Kind in kleinen Gruppen individuell aufblüht.<br>
+
+<p>Vielfalt & Spaß:</p>Das Training wird durch Spiele, Musik und Malen abwechslungsreich ergänzt.<br>
+
+<p>Warum bei uns?</p>
+Unsere Trainer bringen neben jahrzehntelanger Kampfsport-Erfahrung fundiertes Wissen aus Sportwissenschaft, Pädagogik und Psychologie mit - für eine rundum professionelle und altersgerechte Förderung.
+</div>
+
+
+        <div class="card">
+          <div class="card-icon">03</div>
+          <h3>Kenjukate</h3>
+          
+          <p>Modernes Budo für jedes Alter</p>
+Kenjukate verbindet die effektivsten Techniken verschiedener traditioneller Kampfkünste zu einem vielseitigen, modernen Budo-System. In den 1970er-Jahren von Wolfgang Schütte entwickelt, vereint es Elemente aus Karate, Judo, Jiu-Jitsu und weiteren Stilen.
+<br>
+<p>Das Training</p>
+Vielseitige Techniken: Abwechslungsreiches Training von Schlag-, Tritt-, Wurf- und Grifftechniken für eine ganzheitliche Körperbeherrschung.
+
+<p>Praxisnahe Selbstverteidigung:</p> Effektive Bewegungsabläufe und Reaktionsübungen zur sicheren Handhabung realer Bedrohungsszenarien.
+
+<p>Fitness & Koordination:</p> Intensives Aufwärmen zur Förderung von Ausdauer, Beweglichkeit, Kraft und Präzision.
+
+
+<p>Gesundheit & Vitalität:</p> Kräftigt den gesamten Körper, schont die Gelenke und verbessert das Körpergefühl.
+
+<p>Mentale Stärke:</p> Schult Konzentration, Selbstdisziplin, Gelassenheit und ein respektvolles Miteinander.
+
+        </div>
+<!--
+        <div class="card">
+          <div class="card-icon">04</div>
+          <h3>Kickboxen</h3>
+          <p>Dynamisches Konditions- und Wettkampftraining. Fokus auf Explosivität, Distanzgefühl, Reflexe und saubere Technikführung.</p>
+
+Ein intensives und zielgerichtetes Training für alle, die ihre Fitness auf das nächste Level heben und reale Kampfsituationen meistern wollen.
+
+<p>Das Training</p>
+Kondition & Explosivität: Hochintensives Aufwärmen zur Steigerung von Ausdauer, Schnellkraft und Beinarbeit.
+
+<p>Technik & Präzision:</p> Einüben von sauberen Schlag- und Trittkombinationen an Pratzen, Sandsack und mit Partner.
+
+<p>Kontrolliertes Sparring: </p>Schulung von Distanzgefühl, Timing, Reflexen und Abwehr in dynamischen Übungskämpfen.
+
+<p>Maximale Fitness:</p> Verbrennt effektiv Kalorien, stärkt das Herz-Kreislauf-System und baut Muskeln auf.
+
+<p>Mentale Härte:</p> Schärft die Konzentration, fördert die Entschlossenheit und baut Alltagsstress gezielt ab.
+
+<p></p>Für wen? </p> Ideal für Sportler mit Grundkenntnissen sowie Wettkämpfer, die ihre Technik unter realistischen Bedingungen testen wollen.
+
+        </div>
+-->
+        
+      </div>
+    </section>
+        <!-- BENTO GALERIE SEKTION MIT STICKY-SCROLL ZOOM -->
+        <section id="impressionen" class="bento-section-wrapper">
+            
+            <div class="section-header">
+                <h2 class="grid-title">Einblicke in das Tibetische Kung Fu</h2>
+            </div>
+
+            <div class="bento-scroll-container" id="bento-scroll-container">
+                <div class="bento-sticky-wrap">
+                    <div class="gallery-grid" id="gallery-grid">
+                        
+                        <div class="gallery-item" data-dir-x="-120" data-dir-y="-80">
+                            <video autoplay loop muted playsinline><source src="VFan.mp4" type="video/mp4"></video>
+                        </div>
+                        
+                        <div class="gallery-item" data-dir-x="0" data-dir-y="-120">
+                            <video autoplay loop muted playsinline><source src="VKen.mp4" type="video/mp4"></video>
+                        </div>
+
+                        <!-- Target Featured Element -->
+                        <div class="gallery-item target-featured" id="target-featured">
+                            <video autoplay loop muted playsinline>
+                                <source src="VSword.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <div class="gallery-item" data-dir-x="120" data-dir-y="-80">
+                            <video autoplay loop muted playsinline><source src="VKFRollSide.mp4" type="video/mp4"></video>
+                        </div>
+
+                        <div class="gallery-item" data-dir-x="-120" data-dir-y="80">
+                            <video autoplay loop muted playsinline><source src="VKFRollAway.mp4" type="video/mp4"></video>
+                        </div>
+
+                        <div class="gallery-item" data-dir-x="120" data-dir-y="80">
+                            <video autoplay loop muted playsinline><source src="VBank2.mp4" type="video/mp4"></video>
+                        </div>
+
+                        <div class="gallery-item" data-dir-x="-120" data-dir-y="120">
+                            <video autoplay loop muted playsinline><source src="VSword2.mp4" type="video/mp4"></video>
+                        </div>
+
+                        <div class="gallery-item" data-dir-x="0" data-dir-y="120">
+                            <video autoplay loop muted playsinline><source src="VBank.mp4" type="video/mp4"></video>
+                        </div>
+
+                    </div>
+
+                    <!-- HUD Card overlay -->
+                    <div class="video-hud-overlay" id="hud-overlay">
+                        <div class="hud-card">
+                            <span class="hud-badge">Traditionelles Tibetisches Kung Fu</span>
+                            <h3 class="hud-title">Wachse über Dich hinaus</h3>
+                            <p class="hud-desc">Konzentration, Beherrschung und Bewegungsform im fließenden Wechselspiel.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- TRAININGSZEITEN SEKTION (aus !vorlage) -->
+        <section id="schedule" class="schedule-section">
+            <div class="max-w-5xl">
+                <div style="text-align: center; margin-bottom: 3rem;">
+                    <p style="color: var(--color-brand-red); font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">[ KURSZEITEN ]</p>
+                    <h2 style="font-family: var(--font-serif); font-size: clamp(2.2rem, 4vw, 3.2rem); color: var(--color-brand-black);">Trainingszeiten in Eschborn</h2>
+                    <p style="color: var(--color-brand-muted); max-width: 650px; margin: 0.8rem auto 0 auto;">
+                        Das Training findet im Dojo der Götzenstr. 57, 65760 Eschborn statt. Wir trainieren barfuß. Für ein kostenloses Probetraining bringe einfach ein bequemes T-Shirt und eine lange Sporthose mit.
+                    </p>
+                </div>
+
+                <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.1); border-radius: 24px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.04);">
+                    <div style="display: flex; flex-wrap: wrap; justify-content: center; border-bottom: 1px solid rgba(0,0,0,0.1); background: rgba(0,0,0,0.01);">
+                        <button onclick="filterSchedule('all')" id="tab-all" class="schedule-tab active">Alle Zeiten</button>
+                        <button onclick="filterSchedule('kids')" id="tab-kids" class="schedule-tab">Kinder</button>
+                        <button onclick="filterSchedule('teens')" id="tab-teens" class="schedule-tab">Teenager</button>
+                        <button onclick="filterSchedule('adults')" id="tab-adults" class="schedule-tab">Erwachsene</button>
+                    </div>
+
+                    <div id="schedule-rows">
+                        <!-- MONTAG -->
+                        <div class="schedule-row item-kids">
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 800; color: var(--color-brand-red); min-width: 35px;">MO</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--color-brand-black);">Kinder (ab 4 Jahren)</h4>
+                                    <p style="font-size: 0.88rem; color: var(--color-brand-muted);">Tibetisches Kung Fu</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 700; font-size: 0.95rem;">17:30 - 18:30 Uhr</span>
+                                <span class="tag-badge">Kinder</span>
+                            </div>
+                        </div>
+
+                        <div class="schedule-row item-kids item-teens">
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 800; color: var(--color-brand-red); min-width: 35px;">MO</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--color-brand-black);">Kinder (ab 8 Jahren) &amp; Teenager</h4>
+                                    <p style="font-size: 0.88rem; color: var(--color-brand-muted);">Tibetisches Kung Fu</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 700; font-size: 0.95rem;">18:30 - 19:30 Uhr</span>
+                                <span class="tag-badge">Kombiniert</span>
+                            </div>
+                        </div>
+
+                        <div class="schedule-row item-adults">
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 800; color: var(--color-brand-red); min-width: 35px;">MO</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--color-brand-black);">Erwachsene (Kickboxen)</h4>
+                                    <p style="font-size: 0.88rem; color: var(--color-brand-muted);">Einstieg &amp; Fortgeschrittene</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 700; font-size: 0.95rem;">19:30 - 21:00 Uhr</span>
+                                <span class="tag-badge">Erwachsene</span>
+                            </div>
+                        </div>
+
+                        <!-- DIENSTAG -->
+                        <div class="schedule-row item-kids">
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 800; color: var(--color-brand-red); min-width: 35px;">DI</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--color-brand-black);">Kinder (ab 6 Jahren)</h4>
+                                    <p style="font-size: 0.88rem; color: var(--color-brand-muted);">Tibetisches Kung Fu</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 700; font-size: 0.95rem;">17:30 - 18:30 Uhr</span>
+                                <span class="tag-badge">Kinder</span>
+                            </div>
+                        </div>
+
+                        <div class="schedule-row item-kids item-teens">
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 800; color: var(--color-brand-red); min-width: 35px;">DI</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--color-brand-black);">Kinder &amp; Teenager</h4>
+                                    <p style="font-size: 0.88rem; color: var(--color-brand-muted);">Tibetisches Kung Fu</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 700; font-size: 0.95rem;">18:30 - 19:30 Uhr</span>
+                                <span class="tag-badge">Kombiniert</span>
+                            </div>
+                        </div>
+
+                        <div class="schedule-row item-adults">
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 800; color: var(--color-brand-red); min-width: 35px;">DI</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--color-brand-black);">Erwachsene (Kenjukate)</h4>
+                                    <p style="font-size: 0.88rem; color: var(--color-brand-muted);">Ganzheitliche Selbstverteidigung</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 700; font-size: 0.95rem;">20:00 - 21:30 Uhr</span>
+                                <span class="tag-badge">Erwachsene</span>
+                            </div>
+                        </div>
+
+                        <!-- MITTWOCH -->
+                        <div class="schedule-row item-kids">
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 800; color: var(--color-brand-red); min-width: 35px;">MI</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--color-brand-black);">Kinder (ab 6 Jahren)</h4>
+                                    <p style="font-size: 0.88rem; color: var(--color-brand-muted);">Tibetisches Kung Fu</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 700; font-size: 0.95rem;">18:00 - 19:00 Uhr</span>
+                                <span class="tag-badge">Kinder</span>
+                            </div>
+                        </div>
+
+                        <div class="schedule-row item-teens item-adults">
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 800; color: var(--color-brand-red); min-width: 35px;">MI</span>
+                                <div>
+                                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--color-brand-black);">Teenager &amp; Erwachsene</h4>
+                                    <p style="font-size: 0.88rem; color: var(--color-brand-muted);">Tibetisches Kung Fu Formen &amp; Anwendung</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                                <span style="font-weight: 700; font-size: 0.95rem;">19:00 - 21:00 Uhr</span>
+                                <span class="tag-badge">Kombiniert</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROBETRAINING & KONTAKT SEKTION (aus !vorlage) -->
+        <section id="probetraining" class="contact-section">
+            <div class="max-w-7xl">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 4rem;">
+                    
+                    <!-- Probetraining Formular -->
+                    <div>
+                        <p style="color: var(--color-brand-red); font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">[ PROBETRAINING ]</p>
+                        <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--color-brand-black); margin-bottom: 1rem;">Jetzt kostenfrei ausprobieren</h2>
+                        <p style="color: var(--color-brand-muted); margin-bottom: 2rem;">
+                            Egal ob Anfänger oder Fortgeschrittener – wir freuen uns darauf, dich bei einem persönlichen Probetraining begrüßen zu dürfen.
+                        </p>
+<!-- 
+                        <form id="trial-form" onsubmit="handleFormSubmit(event)" style="display: flex; flex-direction: column; gap: 1.2rem;">
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem;">Vollständiger Name</label>
+                                <input type="text" class="form-input" placeholder="z. B. Max Mustermann" required>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div>
+                                    <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem;">E-Mail Adresse</label>
+                                    <input type="email" class="form-input" placeholder="name@beispiel.de" required>
+                                </div>
+                                <div>
+                                    <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem;">Telefonnummer</label>
+                                    <input type="tel" class="form-input" placeholder="+49 170 1234567" required>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem;">Interesse / Zielgruppe</label>
+                                <select class="form-input" required>
+                                    <option value="" disabled selected>Bitte auswählen...</option>
+                                    <option value="kinder">Kinder (ab 4 Jahren)</option>
+                                    <option value="teenager">Teenager</option>
+                                    <option value="erwachsene">Erwachsene (Tibetisches Kung Fu)</option>
+                                    <option value="kenjukate">Erwachsene (Kenjukate)</option>
+                                    <option value="kickboxen">Erwachsene (Kickboxen)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem;">Deine Nachricht (optional)</label>
+                                <textarea class="form-input" rows="4" placeholder="Fragen oder Terminwünsche..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-primary" style="align-self: flex-start; margin-top: 0.5rem;">
+                                Anfrage Absenden
+                            </button>
+                        </form>
+                    -->
+                    </div>
+
+                    <!-- Kontakt & Anfahrt Infos -->
+                    <div id="kontakt" style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <p style="color: var(--color-brand-red); font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.5rem;">[ KONTAKT &amp; ANFAHRT ]</p>
+                            <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--color-brand-black); margin-bottom: 1rem;">Eschborner Sportclub</h2>
+                            
+                            <div style="display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem;">
+                                <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                    <div style="background: rgba(161,0,14,0.1); padding: 0.8rem; border-radius: 12px; color: var(--color-brand-red);">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    </div>
+                                    <div>
+                                        <h4 style="font-weight: 700; color: var(--color-brand-black);">Trainingsstätte (Dojo)</h4>
+                                        <p style="color: var(--color-brand-muted);">Götzenstraße 57, 65760 Eschborn</p>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                    <div style="background: rgba(161,0,14,0.1); padding: 0.8rem; border-radius: 12px; color: var(--color-brand-red);">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                    </div>
+                                    <div>
+                                        <h4 style="font-weight: 700; color: var(--color-brand-black);">Telefon &amp; WhatsApp</h4>
+                                        <p style="color: var(--color-brand-muted);">+49 (0) 163 86 89 569</p>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                                    <div style="background: rgba(161,0,14,0.1); padding: 0.8rem; border-radius: 12px; color: var(--color-brand-red);">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                    </div>
+                                    <div>
+                                        <h4 style="font-weight: 700; color: var(--color-brand-black);">E-Mail</h4>
+                                        <p style="color: var(--color-brand-muted);">info@eschborner-sportclub.de</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Anfahrt Hinweis Card -->
+                        <div style="background: rgba(0, 18, 51, 0.03); border: 1px solid rgba(0,0,0,0.08); border-radius: 16px; padding: 1.5rem; margin-top: 2rem;">
+                            <h5 style="font-weight: 700; color: var(--color-brand-black); margin-bottom: 0.4rem;">Gute Erreichbarkeit</h5>
+                            <p style="font-size: 0.88rem; color: var(--color-brand-muted);">
+                                Nur wenige Gehminuten von der S-Bahn Station Eschborn Süd entfernt. Ausreichend Parkplätze vor Ort vorhanden.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER & IMPRESSUM (aus !vorlage) -->
+    <footer>
+        <div class="max-w-7xl" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2rem; margin-bottom: 2rem;">
+            <div>
+                <h3 style="color: #ffffff; font-family: var(--font-serif); font-size: 1.4rem;">Eschborner Sportclub</h3>
+                <p style="font-size: 0.85rem; color: rgba(255,255,255,0.5);">Traditionelle Kampfkunst</p>
+            </div>
+
+            <div style="display: flex; gap: 2rem;">
+                <a href="#" onclick="openModal('impressum'); return false;">Impressum</a>
+                <a href="#" onclick="openModal('datenschutz'); return false;">Datenschutz</a>
+            </div>
+        </div>
+<!--
+        <div class="max-w-7xl" style="text-align: center; font-size: 0.82rem; color: rgba(255,255,255,0.4);">
+            &copy; 2026 Eschborner Sportclub. Alle Rechte vorbehalten.
+        </div>-->
+    </footer>
+
+    <!-- IMPRESSUM / DATENSCHUTZ MODAL -->
+    <div id="legal-modal" class="modal-overlay">
+        <div class="modal-card">
+            <button onclick="closeModal()" style="position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; cursor: pointer; font-size: 1.5rem; font-weight: 700;">&times;</button>
+            <div id="modal-content">
+                <!-- Dynamischer Inhalt via Javascript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST MESSAGES -->
+    <div id="toast" class="toast-box">
+        <div style="font-weight: 700; margin-bottom: 0.2rem;" id="toast-title">Vielen Dank!</div>
+        <div style="font-size: 0.88rem; color: rgba(255,255,255,0.85);" id="toast-message">Deine Nachricht wurde erfolgreich übermittelt.</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            /* 1. Mobile Menu Functionality */
+            const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+            const mobileMenuClose = document.getElementById("mobile-menu-close");
+            const mobileMenu = document.getElementById("mobile-menu");
+            const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
+
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener("click", () => mobileMenu.classList.add("active"));
+                mobileMenuClose.addEventListener("click", () => mobileMenu.classList.remove("active"));
+                
+                mobileNavLinks.forEach(link => {
+                    link.addEventListener("click", () => mobileMenu.classList.remove("active"));
+                });
+            }
+
+            /* 2. Disziplinen Card Reveal Observer (aus !aktuell) */
+            const cards = document.querySelectorAll(".card");
+            const cardObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, idx) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add("visible");
+                        }, idx * 100);
+                        cardObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            cards.forEach(card => cardObserver.observe(card));
+
+            /* 3. Sticky-Scroll Video Zoom (aus !aktuell) */
+            const scrollContainer = document.getElementById("bento-scroll-container");
+            const targetFeatured = document.getElementById("target-featured");
+            const hudOverlay = document.getElementById("hud-overlay");
+            const galleryItems = document.querySelectorAll(".gallery-item:not(.target-featured)");
+
+            function updateStickyBentoZoom() {
+                if (!scrollContainer || !targetFeatured) return;
+
+                const rect = scrollContainer.getBoundingClientRect();
+                const totalScrollable = rect.height - window.innerHeight;
+                
+                let progress = -rect.top / totalScrollable;
+                progress = Math.max(0, Math.min(1, progress));
+
+                galleryItems.forEach(item => {
+                    const dirX = parseFloat(item.getAttribute("data-dir-x") || "0");
+                    const dirY = parseFloat(item.getAttribute("data-dir-y") || "0");
+
+                    const moveX = dirX * progress * 1.5;
+                    const moveY = dirY * progress * 1.5;
+                    const scale = 1 - (progress * 0.4);
+                    const opacity = 1 - (progress * 1.4);
+                    const blur = progress * 12;
+
+                    item.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
+                    item.style.opacity = Math.max(0, opacity);
+                    item.style.filter = `blur(${blur}px)`;
+                });
+
+                const targetScale = 1 + (progress * 1.25);
+                targetFeatured.style.transform = `scale(${targetScale})`;
+
+                if (progress > 0.55) {
+                    hudOverlay.classList.add("active");
+                } else {
+                    hudOverlay.classList.remove("active");
+                }
+            }
+
+            let ticking = false;
+            window.addEventListener("scroll", () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        updateStickyBentoZoom();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+
+            updateStickyBentoZoom();
+        });
+
+        /* Schedule Filter Functionality */
+        function filterSchedule(category) {
+            const tabs = document.querySelectorAll('.schedule-tab');
+            const rows = document.querySelectorAll('.schedule-row');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            const activeTab = document.getElementById(`tab-${category}`);
+            if (activeTab) activeTab.classList.add('active');
+
+            rows.forEach(row => {
+                if (category === 'all' || row.classList.contains(`item-${category}`)) {
+                    row.style.display = 'flex';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        /* Modal Handler (Impressum & Datenschutz) */
+        function openModal(type) {
+            const modal = document.getElementById("legal-modal");
+            const modalContent = document.getElementById("modal-content");
+            
+            if (type === 'impressum') {
+                modalContent.innerHTML = `
+                   <h3 class="font-serif text-2xl text-black">Impressum</h3>
+                    <p class="font-bold text-brand-accent">Kerstin Laux, Eschborner Sportclub</p>
+                    <p>Inhaberin der Sportschule:<br>Kerstin Laux</p>
+                    <p>Götzenstr. 57<br>65760 Eschborn</p>
+                    <p><strong>Kontakt:</strong><br>Telefon: +49 (0) 163 86 89 569<br>E-Mail: info@eschborner-sportclub.de</p>
+                    <p><strong>Umsatzsteuer-Identifikationsnummer:</strong><br>DE305002689</p>
+                    <p><strong>Verantwortlich für den Inhalt:</strong><br>Kerstin Laux</p>
+                    <p><strong>Haftung für Inhalte:</strong><br>Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Wir übernehmen jedoch keine Gewähr für ihre Richtigkeit, Vollständigkeit oder Aktualität. Als Diensteanbieter sind wir nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen. Eine Haftung für diese Inhalte ist erst ab dem Zeitpunkt der Kenntnis einer Rechtsverletzung möglich. Bei Bekanntwerden entfernen wir diese Inhalte sofort.</p>
+                    <p><strong>Urheberrecht:</strong><br>Die durch die Seitenbetreiber erstellten Inhalte unterliegen dem deutschen Urheberrecht. Jede Vervielfältigung, Bearbeitung oder Verbreitung bedarf unserer schriftlichen Zustimmung. Downloads und Kopien dieser Seite sind nur für den privaten Gebrauch gestattet. Soweit Inhalte von Dritten stammen, werden die Urheberrechte beachtet. Sollten Sie eine Urheberrechtsverletzung feststellen, bitten wir um einen Hinweis. Wir werden die entsprechenden Inhalte umgehend entfernen.</p>
+                `;
+            } else {
+                modalContent.innerHTML = `
+                    <h3 class="font-serif text-2xl text-black">Datenschutzerklärung</h3>
+                    <p class="text-brand-accent font-semibold">Verantwortliche im Sinne der DSGVO:</p>
+                    <p><strong>Kerstin Laux</strong><br>Götzenstr. 57<br>65760 Eschborn<br>E-Mail: info@eschborner-sportclub.de</p>
+                    
+                    <h4 class="text-black font-semibold">Datenverarbeitung auf dieser Website</h4>
+                    <p>Unsere Website verwendet Cookies, um die grundlegenden Funktionen zu ermöglichen und die korrekte Darstellung der Inhalte sicherzustellen. Diese Cookies sind technisch notwendig. Wir verarbeiten keine personenbezogenen Daten über ein Kontaktformular, Anmeldeformulare oder Analysetools.</p>
+                    
+                    <h4 class="text-black font-semibold">Rechtsgrundlage</h4>
+                    <p>Die Verarbeitung Ihrer personenbezogenen Daten (wie z. B. Ihre IP-Adresse) ist für die Bereitstellung der Website und ihrer Funktionen unerlässlich. Die Rechtsgrundlage dafür ist unser berechtigtes Interesse gemäß Art. 6 Abs. 1 lit. f DSGVO. Das berechtigte Interesse liegt in der Gewährleistung der technischen Stabilität und Sicherheit der Website.</p>
+                    
+                    <h4 class="text-black font-semibold">Verwendete Cookies</h4>
+                    <p>Auf dieser Website kommen nur Cookies zum Einsatz, die für den Betrieb der Seite technisch notwendig sind. Diese Cookies werden nicht für die Analyse Ihres Nutzerverhaltens oder für Marketingzwecke verwendet. Sie dienen ausschließlich der Funktionalität der Website, beispielsweise zur Speicherung Ihrer Session-ID oder Ihrer Spracheinstellungen.</p>
+                    
+                    <h4 class="text-black font-semibold">Ihre Rechte als betroffene Person</h4>
+                    <p>Sie haben jederzeit das Recht auf Auskunft über Ihre von uns verarbeiteten Daten, deren Herkunft und Empfänger. Ebenso können Sie die Berichtigung, Sperrung oder Löschung dieser Daten verlangen. Bei Fragen zum Datenschutz können Sie sich jederzeit an die oben genannte Adresse wenden. Sie haben außerdem das Recht, sich bei der zuständigen Aufsichtsbehörde über die Datenverarbeitung zu beschweren.</p>
+                    <p class="mt-2">Wenden Sie sich gerne an uns unter: <a href="mailto:info@eschborner-sportclub.de" class="text-brand-accent underline">info@eschborner-sportclub.de</a>.</p>
+                `;
+            }
+            modal.style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("legal-modal").style.display = "none";
+        }
+
+        /* Formular Submission Simulation */
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const toast = document.getElementById("toast");
+            toast.style.display = "block";
+            
+            event.target.reset();
+
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 4500);
+        }
+    </script>
+    <script>
+    document.addEventListener('click', function playAudio() {
+        const audio = document.getElementById('bg-sound');
+        audio.play().catch(e => console.log("Autoplay blockiert:", e));
+        document.removeEventListener('click', playAudio);
+    }, { once: true });
+</script>
+</body>
+</html>
